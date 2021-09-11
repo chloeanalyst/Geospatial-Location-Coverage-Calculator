@@ -1,9 +1,46 @@
 # New-York-Bus-Tourism-Coverage
 
-## Overview
-The following analysis aims to understand how convenient the New York Bus service is for tourists based on walking distance* to hotels. 
+Functions to calculate how many points are within the radius of a location. 
+Example, how many hotels are within walking distance (1km) of bus stop shelters in New York.
 
-*Radius of 1 to 3 kilometers
+## Functions
+
+### get.total.coverage(locations,lon,lat,distance)
+
+Use case: 
+Calculating the number of locations around a single point.
+
+locations:
+- data frame
+- restrictions = 2 columns only
+- column order = 1: Longitude 2: Latitude
+
+lon = Longitude
+lat = latitude
+
+distance = km eg: 3
+
+### get.multi.coverage(locations,points,distance)
+
+Use case: 
+Calculating the number of locations around multiple points.
+
+locations:
+- data frame
+- restrictions = 2 columns only
+- column order = 1: Longitude 2: Latitude
+
+points:
+- data frame
+- restrictions = 2 columns only
+- column order = 1: Longitude 2: Latitude
+
+lon = Longitude
+lat = latitude
+
+distance = km eg: 3
+
+
 
 ## Data Sources
 
