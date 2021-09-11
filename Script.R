@@ -1,29 +1,32 @@
+#------------------------------------------------------------------------------- LOAD REQUIRED PACKAGES
 library(dplyr)
 library(readr)
 library(geosphere)
 
+#------------------------------------------------------------------------------- LOAD REQUIRED FUNCTIONS
+source("Functions.R")
 
-# Read in Data
+#------------------------------------------------------------------------------- CREAD IN DATA
 
 stop <- read_csv("data/Bus_Stop_Shelter.csv")
 hotel <- read_csv("data/Hotels_Properties_Citywide.csv")
 
 
-# Prep data
+#------------------------------------------------------------------------------- PREPARE DATA
 
 
-stop_data <- as.data.frame(stop %>% select(LATITUDE, LONGITUDE))
-stop_locations <- stop %>% select(Street, LONGITUDE, LATITUDE)
+stop_data <- as.data.frame(stop %>% select(LONGITUDE,LATITUDE))                 # Location points - To be used within the function.
+stop_locations <- stop %>% select(Street, LONGITUDE, LATITUDE)                  # Names - To be joined to the output.
 
-hotel_locations <- hotel %>% select(OWNER_NAME, `STREET NAME`, Borough)
+hotel <- hotel %>% select(Longitude,Latitude)                                   # Locations to be counted.
 
-hotel <- hotel %>% select(Longitude,Latitude)
 
-test <- get.multi.coverage(hotel,stop_data,5)
-test[is.na(test)] <- 0
-test <- test %>% cbind(stop_locations)
-test$`Count of Hotels Covered` <- unlist(test$`Count of Hotels Covered`)
-test <- test %>% distinct
+#------------------------------------------------------------------------------- CALCULATE COVERAGE
+
+
+output <- get.multi.coverage(hotel,stop_data,5)                                  # Call Function
+output <- output %>% cbind(stop_locations)                                       # Add point names and lat longs to coverage data
+output <- output %>% distinct                                                    # Ensures data is unique.
 
 
 
