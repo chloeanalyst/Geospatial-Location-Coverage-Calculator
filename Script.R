@@ -6,7 +6,7 @@ library(geosphere)
 #------------------------------------------------------------------------------- LOAD REQUIRED FUNCTIONS
 source("Functions.R")
 
-#------------------------------------------------------------------------------- CREAD IN DATA
+#------------------------------------------------------------------------------- READ IN DATA
 
 stop <- read_csv("data/Bus_Stop_Shelter.csv")
 hotel <- read_csv("data/Hotels_Properties_Citywide.csv")
