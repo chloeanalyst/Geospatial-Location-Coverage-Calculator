@@ -1,4 +1,4 @@
-# Location Coverage Calculator
+# Location Coverage Calculator - Geospatial analysis
 
 Functions to calculate how many points are within the radius of a location. 
 
