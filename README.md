@@ -1,4 +1,4 @@
-# New-York-Bus-Tourism-Coverage
+# Location Coverage Calculator
 
 Functions to calculate how many points are within the radius of a location. 
 Example, how many hotels are within walking distance (1km) of bus stop shelters in New York.
