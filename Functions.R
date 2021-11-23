@@ -106,26 +106,31 @@ get.total.coverage.transactions <- function(locations,lon,lat,distance) {
   
   combined <- cbind(hotel, covered = output[, 3])
   covered_transactions <- combined %>% filter( covered == TRUE ) %>% summarise( transactions = sum(transactions))
+  total_transactions <- combined %>% summarise( transactions = sum(transactions)) 
+  
   
   
   result$transactions <- covered_transactions$transactions
+  result$total_transactions <- total_transactions$transactions
   
-  
-  
-  
+  result$percentage_transactions <- round(result$transactions / result$total_transactions * 100,2)
   
   
   result <- tibble(result$coverage_percentage,                                          # Create a tibble of results.
                    result$covered_locations,
                    result$total_locations,
-                   result$transactions)
+                   result$transactions,
+                   result$total_transactions,
+                   result$percentage_transactions)
   
   
   
   names(result) <- c("Coverage %",                                                      # Rename the columns.
                      "Count of Locations Covered", 
                      "Total Locations",
-                     "Transactions Covered")  
+                     "Transactions Covered",
+                     "Total Transactions",
+                     "Transaction %")  
   
   return(result)                                                                        # Prints the output when function is called.
   
@@ -147,7 +152,7 @@ get.transaction.coverage<- function(locations,points,distance){                 
   
   
   for (i in 1:nrow(points)) { 
-    total_results[[i]] <- get.total.coverage(
+    total_results[[i]] <- get.total.coverage.transactions(
       locations,
       points[i,1],                 # Iterates over the rows pulling out Latitude & Longitude.
       points[i,2],        
@@ -158,6 +163,7 @@ get.transaction.coverage<- function(locations,points,distance){                 
   total <- as.data.frame(do.call(rbind,total_results))                               # Merges lists into one table.
   total[is.na(total)] <- 0                                                           # Overwrite NA values 
   total$`Count of Locations Covered` <- unlist(total$`Count of Locations Covered`)   # Un-lists Coverage (removes Boolean object)
+  total$`Transactions Covered` <- unlist(total$`Transactions Covered`)
   
   return(total)                                                                      # Prints table when function is called.
   
